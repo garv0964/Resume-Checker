@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Resume Checker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <h2 class="mb-4 text-center">📄 AI Resume Checker + Generator</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded shadow-sm">
+        <div class="mb-3">
+            <label class="form-label">Upload Resume (PDF):</label>
+            <input type="file" name="resume_file" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Paste Job Description:</label>
+            <textarea name="job_desc" class="form-control" rows="6" required></textarea>
+        </div>
+        <button class="btn btn-primary w-100" type="submit">🔍 Analyze & Generate Resume</button>
+    </form>
+
+    {% if result %}
+        <div class="mt-5 p-4 bg-white shadow rounded">
+            <h4>📊 ATS Score: {{ result.score }}%</h4>
+
+            <h5>✅ Matched Skills:</h5>
+            <ul>
+                {% for skill in result.matched_skills %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+
+            <h5>❌ Missing Skills (Resources):</h5>
+            <ul>
+                {% for skill, link in result.missing_skills.items() %}
+                    <li>{{ skill }} — <a href="{{ link }}" target="_blank">Learn</a></li>
+                {% endfor %}
+            </ul>
+
+            <h5>📝 Grammar Issues:</h5>
+            <ul>
+                {% for issue in result.grammar_issues %}
+                    <li>{{ issue.text }} — {{ issue.message }}</li>
+                {% endfor %}
+            </ul>
+
+            <h5>💡 AI Suggestions:</h5>
+            <pre>{{ result.ai_suggestions }}</pre>
+
+            <h5>🎨 Template Recommendation:</h5>
+            <p><strong>{{ result.template_recommendation }}</strong></p>
+
+            <a href="{{ url_for('preview') }}" class="btn btn-outline-info mt-3">👀 Preview AI Resume</a>
+            <a href="{{ url_for('download') }}" class="btn btn-success mt-3 ms-2">⬇️ Download AI Resume</a>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

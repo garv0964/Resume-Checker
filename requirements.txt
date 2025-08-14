@@ -1,0 +1,6 @@
+Flask
+pdfplumber
+scikit-learn
+language-tool-python
+nltk
+reportlab
