@@ -3,7 +3,7 @@ import cohere
 from difflib import get_close_matches
 import language_tool_python
 
-co = cohere.Client("DmwRfZ1o5H61fkeHb715yul3iOJoB4m0ICyFS6DM")
+co = cohere.Client("")
 
 def extract_text_from_pdf(filepath):
     text = ""
